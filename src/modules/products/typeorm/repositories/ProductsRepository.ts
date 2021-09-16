@@ -2,7 +2,17 @@ import {EntityRepository, Repository} from 'typeorm';
 import Product from '../entities/Product';
 
 @EntityRepository(Product)
-export class ProductRepository extends Repository<Product> {
+class ProductRepository extends Repository<Product> {
+
+  public async findById(id: string): Promise<Product | undefined> {
+    const product = await this.findOne({
+      where: {
+        id,
+      }
+    });
+    return product;
+  }
+
 
   public async findByName(name: string): Promise<Product | undefined> {
     const product = this.findOne({
@@ -15,3 +25,6 @@ export class ProductRepository extends Repository<Product> {
   }
 
 }
+
+
+export default ProductRepository;
